@@ -12,9 +12,6 @@ const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Companions', href: '/companions' },
     { label: 'My Journey',  href: '/my-journey' },
-    
-    { label: 'Subscription', href: '/subscription' },
-    { label: 'Sign In', href: '/sign-in' },
   ];
 const NavItems = () => {
     const pathname = usePathname()
