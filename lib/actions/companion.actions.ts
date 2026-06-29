@@ -1,11 +1,18 @@
-"use server";
+'use server';
 
-export async function createCompanion(values: any) {
-  // In a real app we would call Vapi API and save it to a database
-  // Here we'll return a mock companion with an ID
-  const id = "mock-session-" + Math.random().toString(36).substring(7);
-  return {
-    id,
-    ...values,
-  };
+import { auth } from "@clerk/nextjs/server";
+import { createSupabaseClient } from "@/lib/supabase";
+
+export const createCompanion = async (formData: CreateCompanion): Promise<any> => {
+  const { userId: author } = await auth();
+  const supabase = createSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('companions')
+    .insert({ ...formData, author })
+    .select();
+
+  if (error || !data) throw new Error(error?.message || 'Failed to create a companion');
+
+  return data[0];
 }
