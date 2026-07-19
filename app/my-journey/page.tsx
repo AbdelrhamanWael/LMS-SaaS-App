@@ -6,6 +6,8 @@ import {
 } from "@/components/ui/accordion";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 import {
   getUserCompanions,
   getUserSession,
