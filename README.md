@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Converso - AI Companion LMS SaaS
 
-## Getting Started
+Converso is a next-generation Learning Management System (LMS) that integrates interactive AI companions to create personalized, engaging, and dynamic learning experiences. 
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **AI-Powered Companions**: Engage with intelligent voice and text companions powered by Vapi AI.
+- **Companion Library**: Browse, search, and filter a wide variety of AI companions tailored to specific subjects and topics.
+- **Personalized Journey**: Bookmark your favorite companions and track your session history.
+- **Premium Subscriptions**: Unlock advanced features and exclusive companions through our integrated Stripe billing (via Clerk).
+- **Modern UI/UX**: A beautiful, fully responsive interface featuring glassmorphism, micro-animations, and a sleek dark mode.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router & Turbopack)
+- **Library**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) & [Shadcn UI](https://ui.shadcn.com/)
+- **Authentication**: [Clerk](https://clerk.com/)
+- **Database**: [Supabase](https://supabase.com/) (PostgreSQL)
+- **AI Integration**: [Vapi AI](https://vapi.ai/)
+- **Observability**: [Sentry](https://sentry.io/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🏃‍♂️ Getting Started
 
-## Learn More
+### Prerequisites
+Make sure you have Node.js (v20+) installed on your machine.
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/AbdelrhamanWael/LMS-SaaS-App.git
+   cd LMS-SaaS-App/app
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Environment Variables:**
+   Create a `.env.local` file in the root directory and add your keys for Clerk, Supabase, Sentry, and Vapi:
+   ```env
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+   CLERK_SECRET_KEY=your_clerk_secret
+   
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   
+   NEXT_PUBLIC_VAPI_PUBLIC_KEY=your_vapi_key
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Open the app:**
+   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/AbdelrhamanWael/LMS-SaaS-App/issues).
+
+## 📄 License
+This project is licensed under the MIT License.
