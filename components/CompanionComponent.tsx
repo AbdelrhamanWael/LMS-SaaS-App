@@ -38,17 +38,23 @@ const CompanionComponent = ({companionId , name , subject , topic , userName , u
 
 
 
+  const sessionIdRef = useRef<string>('');
+
   useEffect(() => {
-    const onCallStart =() => setCallStatus(CallStatus.ACTIVE);
+    const onCallStart = () => {
+        setCallStatus(CallStatus.ACTIVE);
+        sessionIdRef.current = crypto.randomUUID();
+        addToSessionHistory({ companionId, sessionId: sessionIdRef.current, type: 'session_start', content: 'Session started', status: 'ACTIVE' }).catch(console.error);
+    };
     const onCallEnd = () =>  {
-        
         setCallStatus(CallStatus.FINISHED);
-        addToSessionHistory({ companionId, sessionId: '', type: 'session_end', content: 'Session ended', status: '' })
-        }
-    const onMessage = (message: Message) => {
+        addToSessionHistory({ companionId, sessionId: sessionIdRef.current, type: 'session_end', content: 'Session ended', status: 'FINISHED' }).catch(console.error);
+    }
+    const onMessage = (message: any) => {
             if(message.type === 'transcript' && message.transcriptType === 'final') {
                 const newMessage= { role: message.role, content: message.transcript}
                 setMessages((prev) => [newMessage, ...prev])
+                addToSessionHistory({ companionId, sessionId: sessionIdRef.current, type: message.role, content: message.transcript, status: 'ACTIVE' }).catch(console.error);
             }
         }
     const onSpeechStart = () => setIsSpeaking(true);

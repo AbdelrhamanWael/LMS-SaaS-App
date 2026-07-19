@@ -5,6 +5,9 @@ export const subjects = [
   "history",
   "coding",
   "economics",
+  "web",
+  "backend",
+  "ai",
 ];
 
 export const subjectsColors = {
@@ -14,6 +17,9 @@ export const subjectsColors = {
   coding: "#FFC8E4",
   history: "#FFECC8",
   economics: "#C8FFDF",
+  web: "#A3E4D7",
+  backend: "#F5B041",
+  ai: "#AF7AC5",
 };
 
 export const voices = {
