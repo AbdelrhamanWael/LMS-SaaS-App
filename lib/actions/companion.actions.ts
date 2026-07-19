@@ -84,7 +84,7 @@ export const getRecentSessions = async (limit = 10) => {
   const supabase = createSupabaseClient();  
   const {data , error} = await supabase
     .from('session_history')
-    .select(`* , companion:companions(id , name , subject , topic)`)
+    .select(`* , companion:companions(id , name , subject , topic , duration)`)
     .order('created_at' , {ascending : false})
     .limit(100)
 
@@ -117,31 +117,60 @@ export const getRecentSessions = async (limit = 10) => {
           content: isSystemEvent ? null : session.content,
           companion : session.companion || null,
           companionId : session.companion_id || null,
+          name : session.companion?.name || null,
           title : session.companion?.name || null,
           subject : session.companion?.subject || null,
           topic : session.companion?.topic || null,
+          duration : session.companion?.duration || null,
       }
     })
 }
 
 export const getUserSession = async (userId: string , limit = 10) => {
-  
   const supabase = createSupabaseClient();  
   const {data , error} = await supabase
     .from('session_history')
-    .select(`* , companion:companions(id , name , subject , topic)`)    
+    .select(`* , companion:companions(id , name , subject , topic , duration)`)    
     .eq('user_id', userId)
     .order('created_at' , {ascending : false})
-    .limit(limit)
+    .limit(100)
+
     if(error || !data) throw new Error(error?.message || 'Failed to fetch recent sessions');
-    return data.map((session : any) => ({
-      ...session,
-      companion : session.companion || null,
-      companionId : session.companion_id || null,
-      title : session.companion?.name || null,
-      subject : session.companion?.subject || null,
-      topic : session.companion?.topic || null,
-    }))
+
+    const sessionMap = new Map();
+    const uniqueSessions: any[] = [];
+    
+    for (const row of data) {
+        if (!sessionMap.has(row.session_id)) {
+            sessionMap.set(row.session_id, row);
+            uniqueSessions.push(row);
+        } else {
+            const existingRow = sessionMap.get(row.session_id);
+            const existingIsSystem = existingRow.type === 'session_start' || existingRow.type === 'session_end';
+            const newIsSystem = row.type === 'session_start' || row.type === 'session_end';
+            
+            if (existingIsSystem && !newIsSystem) {
+                Object.assign(existingRow, row);
+            }
+        }
+    }
+
+    const finalSessions = uniqueSessions.slice(0, limit);
+
+    return finalSessions.map((session : any) => {
+      const isSystemEvent = session.type === 'session_start' || session.type === 'session_end';
+      return {
+        ...session,
+        content: isSystemEvent ? null : session.content,
+        companion : session.companion || null,
+        companionId : session.companion_id || null,
+        name : session.companion?.name || null,
+        title : session.companion?.name || null,
+        subject : session.companion?.subject || null,
+        topic : session.companion?.topic || null,
+        duration : session.companion?.duration || null,
+      }
+    })
 }
 export const getUserCompanions = async (userId: string) => {
     const supabase = createSupabaseClient();
