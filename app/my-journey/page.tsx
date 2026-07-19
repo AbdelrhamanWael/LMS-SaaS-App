@@ -64,7 +64,7 @@ const Profile = async () => {
           </div>
         </div>
       </section>
-      <Accordion type="multiple">
+      <Accordion>
         <AccordionItem value="bookmarks">
           <AccordionTrigger className="text-2xl font-bold">
             Bookmarked Companions {`(${bookmarkedCompanions.length})`}
